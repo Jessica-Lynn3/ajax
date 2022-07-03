@@ -40,5 +40,22 @@ function orderMelons(evt) {
 
   // TODO: show the result message after your form
   // TODO: if the result code is ERROR, make it show up in red (see our CSS!)
+  const formInputs = {
+    melon_type: document.querySelector('#melon-type-field').value,
+    qty: document.querySelector('#qty-field').value,
+  };
+
+  fetch('/order-melons.json', {
+    method: 'POST',
+    body: JSON.stringify(formInputs),
+    headers: {
+        'Content-Type': 'application/json',
+    },
+  })
+
+  .then((response) => response.json())
+  .then((jsonOrder) => {
+    document.querySelector('#order-status').innerHTML = jsonOrder.msg
+  });
 }
 document.querySelector('#order-form').addEventListener('submit', orderMelons);
